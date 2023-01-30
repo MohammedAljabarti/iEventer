@@ -46,18 +46,8 @@ session_start()
     </header>
 
 
-<!--
-<h3 style="text-align: center;">In this section you can share your thoughts and experience in event you attended</h3>
 
--->
- 
-
-
-
-
-
- 
-<form method="POST"  name="myform">
+<form method="POST"  enctype="multipart/form-data"  name="myform">
      
 <br>
 
@@ -82,16 +72,31 @@ session_start()
 <h1 style="  text-align: center;
 " >
 <?php echo $_GET['subject']; ?>
-<h1>
+</h1>
 
- <label style="margin-left:800px;">Share your experience with us</label>
+
+
+
+<h3 style="  text-align: center;
+" >
+ <label  style="  text-align: center;" >Share your experience with us</label>
+ </h3>
 
 <br>
 
 <br>
-<textarea  style="margin-left:300px;" name="comment" id="" cols="200" rows="20" placeholder="Insert text here"></textarea>
 
+
+
+<h3 style="  text-align: center;
+" >
+<textarea  style="margin-left:300px;"   name="comment" id="" cols="100" rows="10" placeholder="What's in your mind?"></textarea>
+ </h3>
 <br>
+
+
+<input class="btn btn-dark" type="file" name="file" id="file" />
+
 <input style="margin-left:800px;" type="submit" value="Share" name="sub">
 </form>
 <br>
@@ -139,9 +144,17 @@ $comment=$_POST['comment'];
 $s=$_GET['subject'];;
 
 
+$filename = $_FILES["file"]["name"];
+    
+    $tempname = $_FILES["file"]["tmp_name"];
+    $folder = "images/" . $filename;
+    move_uploaded_file($filename, $folder);
+
+
+
  
 $date=":".date("Y/m/d")." ".date("l")."";
-$sql="INSERT INTO `forum` ( `Name`, `Comment`,`date`,`Subject`) VALUES ('$name', '$comment','$date','$s');";
+$sql="INSERT INTO `forum` ( `Name`, `Comment`,`date`,`Subject`,`img`) VALUES ('$name', '$comment','$date','$s','$folder');";
 
 
 mysqli_query($conn,$sql);
@@ -152,14 +165,7 @@ exit;
 
 
 
- }
-
- ?>
-
-
-
-
-<div>
+ }<div>
 <h3>Comments:</h3>
 
 

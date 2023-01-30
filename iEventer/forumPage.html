@@ -15,6 +15,88 @@
     font-weight: 700;
     color: rgb(104, 34, 34);
     text-align: center">Forums section</div>
+    
+    
+    
+<h2 id="adding">Click To Add New Forum!</h2>
+<img src="images/add.png" alt="adding new forum" width=80 height=80 onclick="add_forum()" id="addpic">
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+<div>
+    <form action="" method="POST" enctype="multipart/form-data" style="display:none;" id="discussion">
+<label for="">Select Subject Category</label>
+
+<br>
+        <select name="selct" id="selection">
+
+
+            <option value="Programming">Programming</option>
+
+            <option value="Regelgion">Religion</option>
+
+            <option value="Sport">Sport</option>
+
+            <option value="Technical">Technical</option>
+
+            <option value="Other">Other</option>
+
+
+
+
+
+
+
+
+
+        </select>
+
+
+
+        <br>
+
+        <label for="">Subject name:</label>
+
+        <br>
+<input name="subject" id="discussion" type="text" required>
+
+
+<br>
+<br>
+
+
+<label for="">Select a Picture for the topic:</label>
+
+<input class="btn btn-dark" type="file" name="file" id="file" />
+
+
+
+
+<br>
+<br>
+
+<input name="sub" type="submit"   class="btn btn-dark" value="start discussion!" onclick="hide('addpic','discussion','adding')"  >
+
+
+
+
+<?php
+ ?>
+
+
+
+    </form>
+
 </body>
 
 </html>

@@ -61,6 +61,204 @@
 
         }
     </script>
+    
+    
+    <h2 id="adding">Click To Add New Forum!</h2>
+<img src="images/add.png" alt="adding new forum" width=80 height=80 onclick="add_forum()" id="addpic">
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+<div>
+    <form action="" method="POST" enctype="multipart/form-data" style="display:none;" id="discussion">
+<label for="">Select Subject Category</label>
+
+<br>
+        <select name="selct" id="selection">
+
+
+            <option value="Programming">Programming</option>
+
+            <option value="Regelgion">Religion</option>
+
+            <option value="Sport">Sport</option>
+
+            <option value="Technical">Technical</option>
+
+            <option value="Other">Other</option>
+
+
+
+
+
+
+
+
+
+        </select>
+
+
+
+        <br>
+
+        <label for="">Subject name:</label>
+
+        <br>
+<input name="subject" id="discussion" type="text" required>
+
+
+<br>
+<br>
+
+
+<label for="">Select a Picture for the topic:</label>
+
+<input class="btn btn-dark" type="file" name="file" id="file" />
+
+
+
+
+<br>
+<br>
+
+<input name="sub" type="submit"   class="btn btn-dark" value="start discussion!" onclick="hide('addpic','discussion','adding')"  >
+
+
+
+
+<?php
+ ?>
+
+
+
+    </form>
+
+
+    <hr>
+
+</div>
+
+
+
+
+
+
+<h2 id="deleting">Click To Delete Existed Forum!</h2>
+<img src="images/delete.png" alt="adding new forum" width=80 height=80 onclick="Delete_Forum()" id="addpicdel">
+
+
+
+
+
+
+<div >
+
+
+<br>
+
+ 
+
+
+
+
+<form method="POST" id="delete_forum" name="delete" style="display:none;" onclick="Delete_Forum()">
+
+
+<h2>Select from the Following existed forums to Delete!</h2>
+
+
+<br>
+
+<select name="deletion" >
+
+
+
+
+
+
+<?php
+
+
+
+
+$conn =mysqli_connect('localhost','root','','ieventer');
+
+
+if ($conn) {
+
+
+echo "Connection sucsessful";
+ }
+ else {
+
+ echo "error";
+ }
+
+ $name=$_SESSION['name'];
+
+
+ $sql="SELECT * from form_cat where name ='$name';
+" ;
+;
+ 
+
+$loop = mysqli_query($conn,$sql);
+
+
+
+while($row = mysqli_fetch_array($loop)){
+
+ 
+    $subject=$row['Subject_name'];
+    $pic=$row['pic'];
+
+  echo "
+
+
+  <option value='$subject'>$subject</option>
+";
+
+ 
+
+   
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+?>
+</select>
+<br>
+<br>
+
+<input name="del" type="submit" class="btn btn-dark" value="Apply" onclick="hide('deleting','delete_forum','deleting')"  >
+
+</form>
+
+
+
+
+
+<hr>
+
 </body>
 
 </html>

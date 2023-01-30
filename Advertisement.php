@@ -8,7 +8,62 @@ ob_start();
 <!DOCTYPE html>
 <html>
 <head>
+<head>
 <script>
+
+
+
+function msg(){
+
+   swal({
+  title: "HTML <small>Title</small>!",
+  text: "<img src='images/send-email.gif' >",
+  html: true
+});
+
+//swal('Successfully Done!', '', 'success');
+
+
+}
+
+
+
+function msg_del_edit(){
+
+ 
+
+swal('Successfully Done!', 'PLease Refresh The Page', 'success');
+
+
+}
+
+
+
+
+
+
+
+function hide(pic,form,text){
+
+ 
+ 
+document.getElementById(pic).style.display="BLOCK";
+
+document.getElementById(form).style.display="BLOCK";
+document.getElementById(text).style.display="BLOCK";
+
+
+
+
+
+}
+
+
+
+
+
+
+
    function CreateSuitable() {
 
 
@@ -129,6 +184,58 @@ console.log(option);
 
 
    }
+
+
+
+   function add_Add(){
+
+document.getElementById("adding_form").style.display="BLOCK";
+
+document.getElementById("advrtisement_pic").style.display="none";
+
+
+document.getElementById("add_text").style.display="none";
+
+
+}
+
+
+
+
+
+
+
+function Delete_Forum(){
+
+
+document.getElementById("delete_forum").style.display="BLOCK";
+
+document.getElementById("addpicdel").style.display="none";
+
+
+document.getElementById("deleting").style.display="none";
+
+}
+
+
+
+
+function Edit_Forum(){
+   
+   document.getElementById("edit_forum").style.display="BLOCK";
+ 
+ document.getElementById("edit").style.display="none";
+ 
+ 
+ document.getElementById("editing").style.display="none";
+ 
+ 
+ 
+ }
+ 
+
+
+
 </script>
 
 
@@ -188,6 +295,18 @@ left:90px;
 <label for="">Select the method of advertizing</label>
 
 
+    
+<h1 id="add_text">Click to Add an add!</h1>
+
+
+<img style="margin:0 50% 0 50%" src="images/ad.png"  width=80 height=80 alt="" onclick="add_Add()" id="advrtisement_pic">
+
+
+<form action="" id="adding_form" style="display:none;">
+
+<label for="">Select the method of advertizing</label>
+
+
 <select id="sel"  onchange="CreateSuitable()"   name="" id="">
 
 <option value=""  ><-Select-></option>
@@ -236,7 +355,7 @@ left:90px;
 <br>
 
 
-<input type="submit" name="subYT" id="submit" />
+<input type="submit" name="subYT" id="submit"   />
 
 
 
@@ -350,6 +469,224 @@ left:90px;
 <hr>
 
 
+<br>
+
+ 
+
+<h1 id="deleting">Click To Delete An advertisement!</h1>
+
+<img style="margin:0 50% 0 50%"    src="images/delete_col.png" alt="adding new forum" width=80 height=80 onclick="Delete_Forum()" id="addpicdel">
+
+
+
+
+
+
+<form method="POST" id="delete_forum" name="delete" style="display:none;" onclick="Delete_Forum()">
+
+
+<h2>Select from the Following Ads  to Delete!</h2>
+
+
+<br>
+
+<select name="deletion" >
+
+
+
+
+
+
+<?php
+
+
+
+
+$conn =mysqli_connect('localhost','root','','ieventer');
+
+
+if ($conn) {
+
+
+echo "Connection sucsessful";
+ }
+ else {
+
+ echo "error";
+ }
+
+ $name=$_SESSION['name'];
+
+
+ $sql="SELECT * from advertisments WHERE name ='$name';
+" ;
+;
+ 
+
+$loop = mysqli_query($conn,$sql);
+
+
+
+while($row = mysqli_fetch_array($loop)){
+
+ 
+    $description=$row['description'];
+   
+
+  echo "
+
+
+  <option value='$description'>$description</option>
+";
+
+ 
+
+   
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+?>
+</select>
+<br>
+<br>
+
+<input name="del" type="submit" class="btn btn-dark" value="Apply" onclick="hide('deleting','delete_forum','deleting')"  >
+
+</form>
+
+<!--Edit-->
+
+
+<hr>
+
+
+<h1 id="editing">Click To Edit Existed Forum!</h1>
+<img style="margin:0 50% 0 50%" src="images/edit.png" alt="edit new forum" width=80 height=80 onclick="Edit_Forum()" id="edit">
+
+
+<!--Edit feature-->
+
+ 
+<form method="POST" id="edit_forum" name="edit" style="display:none;" onclick="Edit_Forum()">
+
+
+<h2>Select from the Following Ads to Edit!</h2>
+
+
+<br>
+
+<select name="editing" >
+
+
+
+
+
+
+<?php
+
+
+
+
+$conn =mysqli_connect('localhost','root','','ieventer');
+
+
+if ($conn) {
+
+
+echo "Connection sucsessful";
+ }
+ else {
+
+ echo "error";
+ }
+
+ $name=$_SESSION['name'];
+
+
+ $sql="SELECT * from advertisments WHERE name ='$name';
+" ;
+;
+ 
+
+$loop = mysqli_query($conn,$sql);
+
+
+
+while($row = mysqli_fetch_array($loop)){
+
+ 
+    $description=$row['description'];
+
+  echo "
+
+
+  <option value='$description'>$description</option>
+";
+
+ 
+
+   
+
+
+}
+
+
+
+
+
+
+
+?>
+</select>
+<br>
+<br>
+
+
+
+
+<h3>The new Description:</h3>
+
+
+
+<br>
+ <input name="edited"   type='text'>
+<br>
+
+<br>
+
+
+
+
+<br>
+
+
+<br>
+
+<input name="edit" type="submit"  class="btn btn-dark" value="Apply" onclick="hide('edit','edit','editing')"  >
+
+</form>
+
+
+
+
+
+
+<hr>
+
+
+
+
 <?php
  
 
@@ -364,6 +701,90 @@ left:90px;
      echo "error";
  }
 
+
+ $edit='';
+
+
+
+ if(isset($_POST["edit"])){ 
+
+
+
+
+   $old_name=$_POST['editing'];
+   
+ 
+   $new_name=$_POST['edited'];
+ 
+   if($new_name==''){
+ 
+ 
+     $new_name=$old_name;
+ 
+   }
+ 
+ 
+ 
+ 
+   $sql="UPDATE advertisments 
+   SET description = '$new_name', Edited= 'YES'
+   WHERE description = '$old_name';";
+   try{
+   mysqli_query($conn,$sql);
+ 
+     
+  
+ 
+   }
+   
+   
+   catch(err){
+   
+   }
+ 
+ 
+   echo "<script> msg_del_edit()</script>";
+ 
+ 
+  
+    
+ //header("Location:Create_Form.php");
+ //ob_end_flush();
+ 
+  
+ 
+  }
+ 
+
+
+
+
+ if(isset($_POST["del"])){ 
+
+ 
+   $seleced=$_POST['deletion'];
+ 
+  
+   $sql="DELETE FROM advertisments WHERE description='$seleced';
+   ";
+   try{
+   mysqli_query($conn,$sql);
+   }
+   
+   
+   catch(err){
+   
+   }
+   
+ 
+   
+   //header("Location:Advertisement.php");
+   //ob_end_flush();
+ 
+  
+ 
+  }
+ 
 
 
 
@@ -402,9 +823,13 @@ left:90px;
 
    
  
-      $sql="INSERT INTO `advertisments` (`Desc`, `URL`, `platform`, `name`, `date`) VALUES ('$desc', '$folder', 'iEventer_Server_Flyer', '$name', '$date');";
+      $sql="INSERT INTO `advertisments` (`description`, `URL`, `platform`, `name`, `date`, `Edited`) VALUES ('$desc', '$folder', 'iEventer_Server_Flyer', '$name', '$date','NY');";
       mysqli_query($conn, $sql);
     
+
+
+
+      echo "<script> msg()</script>";
 
 
    header("Location:Advertisement.php");
@@ -462,7 +887,7 @@ left:90px;
 
 
    
-      $sql="INSERT INTO `advertisments` (`Desc`, `URL`, `platform`, `name`, `date`) VALUES ('$desc', '$folder', 'iEventer_Server_Vid', '$name', '$date');";
+      $sql="INSERT INTO `advertisments` ( `description`, `URL`, `platform`, `name`, `date`, `Edited`) VALUES ('$desc', '$folder', 'iEventer_Server_Vid', '$name', '$date','NY');";
       mysqli_query($conn, $sql);
     
  
@@ -516,7 +941,7 @@ if (str_contains($URL, 'https://www.youtube.com/watch?')) {
     $date=":".date("Y/m/d")." ".date("l")."";
     
     
-    $sql="INSERT INTO `advertisments` (`Desc`, `URL`, `platform`, `name`, `date`) VALUES ('$desc', '$URL', 'Youtube', '$name', '$date');";
+    $sql="INSERT INTO `advertisments` (`description`, `URL`, `platform`, `name`, `date`, `Edited`) VALUES ('$desc', '$URL', 'Youtube', '$name', '$date','NY');";
     
     
     try{
@@ -580,7 +1005,7 @@ if (str_contains($URL, 'https://www.youtube.com/watch?')) {
       $date=":".date("Y/m/d")." ".date("l")."";
       
       
-      $sql="INSERT INTO `advertisments` (`Desc`, `URL`, `platform`, `name`, `date`) VALUES ('$desc', '$URL', 'Twitter', '$name', '$date');";
+      $sql="INSERT INTO `advertisments` (`description`, `URL`, `platform`, `name`, `date`, `Edited`) VALUES ('$desc', '$URL', 'Twitter', '$name', '$date','NY');";
       
       
       try{
@@ -641,7 +1066,7 @@ if (str_contains($URL, 'https://www.youtube.com/watch?')) {
       $date=":".date("Y/m/d")." ".date("l")."";
       
       
-      $sql="INSERT INTO `advertisments` (`Desc`, `URL`, `platform`, `name`, `date`) VALUES ('$desc', '$URL', 'Instagram', '$name', '$date');";
+      $sql="INSERT INTO `advertisments` (`description`, `URL`, `platform`, `name`, `date`, `Edited`) VALUES ('$desc', '$URL', 'Instagram', '$name', '$date','NY');";
       
       
       try{
@@ -694,6 +1119,11 @@ if (str_contains($URL, 'https://www.youtube.com/watch?')) {
 
 
 
+         
+         if($row['Edited']=='YES'){
+
+
+         }
 
 
 
@@ -722,8 +1152,21 @@ if (str_contains($URL, 'https://www.youtube.com/watch?')) {
  
 
    echo "<h3 style='text-align:center; color:red'>Brief Description: <br>";
+
+
+
    
-   echo "<br>".$row['Desc']."<br>";
+   if($row['Edited']=='YES'){
+
+      $edit="[Edited]";
+            
+   }
+
+
+   echo "$edit"."<br>";
+
+   
+   echo "<br>".$row['description']."<br>";
 
 
    echo "<hr>";
@@ -770,8 +1213,18 @@ echo "        <video   style='margin-left:40%;'    controls width='440' height='
 
 
 echo "<h3 style='text-align:center; color:red'>Brief Description: <br>";
+
+if($row['Edited']=='YES'){
+
+   $edit="[Edited]";
+         
+}
+
+echo "$edit"."<br>";
+
+
    
-echo "<br>".$row['Desc']."<br>";
+echo "<br>".$row['description']."<br>";
 
 
 echo "<hr>";
@@ -807,8 +1260,18 @@ echo "<blockquote class='instagram-media' data-instgrm-permalink='$url=ig_embed&
    
 
 echo "<h3 style='text-align:center; color:red'>Brief Description: <br>";
+
+
+if($row['Edited']=='YES'){
+
+   $edit="[Edited]";
+         
+}
+
+echo "$edit"."<br>";
+
    
-echo "<br>".$row['Desc']."<br>";
+echo "<br>".$row['description']."<br>";
 
 
 echo "<hr>";
@@ -849,8 +1312,18 @@ echo "<pre>";
 
   
 echo "<h3 style='text-align:center; color:red'>Brief Description: <br>";
+
+
+if($row['Edited']=='YES'){
+
+   $edit="[Edited]";
+         
+}
+
+echo "$edit"."<br>";
+
    
-echo "<br>".$row['Desc']."<br>";
+echo "<br>".$row['description']."<br>";
 
 
 echo "<hr>";
@@ -883,7 +1356,8 @@ $res="https://www.youtube.com/embed/".$cut;
 
 echo "<h3>".$row['name']." At"." ".$row['date'] ."<br>";
    
-echo "<h3>Brief Description: <br>".$row['Desc']."<br>";
+ 
+ 
 
 
   echo "<iframe width='560' height='315' src='$res' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen> ></iframe>" ."<br> <br>";
@@ -892,7 +1366,19 @@ echo "<h3>Brief Description: <br>".$row['Desc']."<br>";
   
 echo "<h3 style='text-align:center; color:red'>Brief Description: <br>";
    
-echo "<br>".$row['Desc']."<br>";
+
+
+if($row['Edited']=='YES'){
+
+   $edit="[Edited]";
+         
+}
+
+echo "$edit"."<br>";
+
+
+
+echo "<br>".$row['description']."<br>";
 
 
 echo "<hr>";
